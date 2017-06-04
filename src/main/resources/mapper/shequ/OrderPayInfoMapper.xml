@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoan.dao.shequ.OrderPayInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.guoan.entity.shequ.bo.OrderPayInfo" >
+    <id column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <id column="flow_status" property="flowStatus" jdbcType="INTEGER" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="flow_status_name" property="flowStatusName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, user_id, flow_status, user_type, flow_status_name, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guoan.entity.shequ.bo.OrderPayInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order_pay_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.guoan.entity.shequ.bo.OrderPayInfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_pay_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=VARCHAR}
+      and flow_status = #{flowStatus,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.guoan.entity.shequ.bo.OrderPayInfoKey" >
+    delete from t_order_pay_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=VARCHAR}
+      and flow_status = #{flowStatus,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guoan.entity.shequ.bo.OrderPayInfoCriteria" >
+    delete from t_order_pay_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guoan.entity.shequ.bo.OrderPayInfo" >
+    insert into t_order_pay_info (order_id, user_id, flow_status, 
+      user_type, flow_status_name, create_time
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{flowStatus,jdbcType=INTEGER}, 
+      #{userType,jdbcType=VARCHAR}, #{flowStatusName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guoan.entity.shequ.bo.OrderPayInfo" >
+    insert into t_order_pay_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="flowStatus != null" >
+        flow_status,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="flowStatusName != null" >
+        flow_status_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="flowStatus != null" >
+        #{flowStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="flowStatusName != null" >
+        #{flowStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guoan.entity.shequ.bo.OrderPayInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_order_pay_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_order_pay_info
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flowStatus != null" >
+        flow_status = #{record.flowStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flowStatusName != null" >
+        flow_status_name = #{record.flowStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_order_pay_info
+    set order_id = #{record.orderId,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      flow_status = #{record.flowStatus,jdbcType=INTEGER},
+      user_type = #{record.userType,jdbcType=VARCHAR},
+      flow_status_name = #{record.flowStatusName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guoan.entity.shequ.bo.OrderPayInfo" >
+    update t_order_pay_info
+    <set >
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="flowStatusName != null" >
+        flow_status_name = #{flowStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=VARCHAR}
+      and flow_status = #{flowStatus,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guoan.entity.shequ.bo.OrderPayInfo" >
+    update t_order_pay_info
+    set user_type = #{userType,jdbcType=VARCHAR},
+      flow_status_name = #{flowStatusName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=VARCHAR}
+      and flow_status = #{flowStatus,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoan.dao.shequ.AppUserAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.guoan.entity.shequ.bo.AppUserAddress" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, area_id, detail, is_default, create_time, contact, telephone
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guoan.entity.shequ.bo.AppUserAddressCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_app_user_address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_app_user_address
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_app_user_address
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guoan.entity.shequ.bo.AppUserAddressCriteria" >
+    delete from t_app_user_address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guoan.entity.shequ.bo.AppUserAddress" >
+    insert into t_app_user_address (id, user_id, area_id, 
+      detail, is_default, create_time, 
+      contact, telephone)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{areaId,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=VARCHAR}, #{isDefault,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{contact,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.guoan.entity.shequ.bo.AppUserAddress" >
+    insert into t_app_user_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="contact != null" >
+        contact,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guoan.entity.shequ.bo.AppUserAddressCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_app_user_address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_app_user_address
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaId != null" >
+        area_id = #{record.areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detail != null" >
+        detail = #{record.detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDefault != null" >
+        is_default = #{record.isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.contact != null" >
+        contact = #{record.contact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_app_user_address
+    set id = #{record.id,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      area_id = #{record.areaId,jdbcType=VARCHAR},
+      detail = #{record.detail,jdbcType=VARCHAR},
+      is_default = #{record.isDefault,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      contact = #{record.contact,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guoan.entity.shequ.bo.AppUserAddress" >
+    update t_app_user_address
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contact != null" >
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guoan.entity.shequ.bo.AppUserAddress" >
+    update t_app_user_address
+    set user_id = #{userId,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      contact = #{contact,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 开始 -->
+  <resultMap id="FullResultMap" type="com.guoan.entity.shequ.bo.AppUserAddressFull" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="INTEGER" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+	<result column="province" property="province" jdbcType="VARCHAR" />
+	<result column="city" property="city" jdbcType="VARCHAR" />
+	<result column="district" property="district" jdbcType="VARCHAR" />
+	<result column="towns" property="towns" jdbcType="VARCHAR" />
+	<result column="community" property="community" jdbcType="VARCHAR" />
+	<result column="building" property="building" jdbcType="VARCHAR" />
+	<result column="province_id" property="provinceId" jdbcType="VARCHAR" />
+	<result column="city_id" property="cityId" jdbcType="VARCHAR" />
+	<result column="district_id" property="districtId" jdbcType="VARCHAR" />
+	<result column="towns_id" property="townsId" jdbcType="VARCHAR" />
+	<result column="community_id" property="communityId" jdbcType="VARCHAR" />
+	<result column="building_id" property="buildingId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+	<select id="selectByUser" resultMap="FullResultMap" parameterType="java.lang.String">
+		SELECT
+			addr.id,
+			addr.area_id,
+			area.province,
+			area.city,
+			area.district,
+			area.towns,
+			area.community,
+			area.building,
+			area.province_id,
+			area.city_id,
+			area.district_id,
+			area.towns_id,
+			area.community_id,
+			area.building_id,
+			addr.detail,
+			addr.contact,
+			addr.telephone,
+			addr.is_default
+		FROM
+			t_app_user_address addr,
+			t_sys_area area
+		WHERE
+			addr.user_id =#{userId}
+		AND addr.area_id = area.id
+		order by is_default desc, addr.create_time
+	</select>
+
+	<select id="selectById" resultMap="FullResultMap" parameterType="java.lang.String">
+		SELECT
+			addr.id,
+			addr.area_id,
+			area.province_id,
+			area.city_id,
+			area.district_id,
+			area.towns_id,
+			area.community_id,
+			area.building_id,
+			area.province,
+			area.city,
+			area.district,
+			area.towns,
+			area.community,
+			area.building,
+			addr.detail,
+			addr.contact,
+			addr.telephone,
+			addr.is_default
+		FROM
+			t_app_user_address addr,
+			t_sys_area area
+		WHERE
+			addr.id =#{id}
+		AND addr.area_id = area.id
+	</select>
+	
+	<update id="cancelDefault" parameterType="java.lang.String">
+		UPDATE t_app_user_address
+		SET is_default = 0
+		WHERE
+			user_id = #{userId}
+	</update>
+	
+	<update id="setDefault" parameterType="java.lang.String">
+		UPDATE t_app_user_address
+		SET is_default = 1
+		WHERE
+			id = #{id}
+	</update>
+
+	<select id="getDefaultAddr" resultMap="FullResultMap" parameterType="java.lang.String">
+		SELECT
+			addr.id,
+			addr.area_id,
+			area.province_id,
+			area.city_id,
+			area.district_id,
+			area.towns_id,
+			area.community_id,
+			area.building_id,
+			area.province,
+			area.city,
+			area.district,
+			area.towns,
+			area.community,
+			area.building,
+			addr.detail,
+			addr.contact,
+			addr.telephone,
+			addr.is_default
+		FROM
+			t_app_user_address addr,
+			t_sys_area area
+		WHERE
+			addr.user_id =#{userId}
+		AND addr.area_id = area.id
+		AND addr.is_default=1
+	</select>
+</mapper>

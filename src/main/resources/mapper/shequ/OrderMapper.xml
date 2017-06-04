@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoan.dao.shequ.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.guoan.entity.shequ.bo.Order" >
+    <id column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+    <result column="order_telephone" property="orderTelephone" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="order_contact" property="orderContact" jdbcType="VARCHAR" />
+    <result column="order_address" property="orderAddress" jdbcType="VARCHAR" />
+    <result column="order_remark" property="orderRemark" jdbcType="VARCHAR" />
+    <result column="appointment_begin_time" property="appointmentBeginTime" jdbcType="TIMESTAMP" />
+    <result column="appointment_end_time" property="appointmentEndTime" jdbcType="TIMESTAMP" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER" />
+    <result column="service_user_id" property="serviceUserId" jdbcType="VARCHAR" />
+    <result column="service_telephone" property="serviceTelephone" jdbcType="VARCHAR" />
+    <result column="service_contact" property="serviceContact" jdbcType="VARCHAR" />
+    <result column="service_type" property="serviceType" jdbcType="VARCHAR" />
+    <result column="service_remark" property="serviceRemark" jdbcType="VARCHAR" />
+    <result column="coupon_id" property="couponId" jdbcType="VARCHAR" />
+    <result column="order_amount" property="orderAmount" jdbcType="DOUBLE" />
+    <result column="order_reduce" property="orderReduce" jdbcType="DOUBLE" />
+    <result column="order_paid" property="orderPaid" jdbcType="DOUBLE" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="flow_status" property="flowStatus" jdbcType="INTEGER" />
+    <result column="flow_status_name" property="flowStatusName" jdbcType="VARCHAR" />
+    <result column="is_evaluation" property="isEvaluation" jdbcType="INTEGER" />
+    <result column="evaluation_attitude" property="evaluationAttitude" jdbcType="INTEGER" />
+    <result column="evaluation_quality" property="evaluationQuality" jdbcType="INTEGER" />
+    <result column="evaluation_remark" property="evaluationRemark" jdbcType="VARCHAR" />
+    <result column="payment_type" property="paymentType" jdbcType="INTEGER" />
+    <result column="payment_type_name" property="paymentTypeName" jdbcType="VARCHAR" />
+    <result column="is_cancel" property="isCancel" jdbcType="INTEGER" />
+    <result column="cancel_remark" property="cancelRemark" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="BIGINT" />
+    <result column="charge_id" property="chargeId" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, order_sn, order_telephone, create_time, order_contact, order_address, order_remark, 
+    appointment_begin_time, appointment_end_time, order_type, service_user_id, service_telephone, 
+    service_contact, service_type, service_remark, coupon_id, order_amount, order_reduce, 
+    order_paid, order_status, flow_status, flow_status_name, is_evaluation, evaluation_attitude, 
+    evaluation_quality, evaluation_remark, payment_type, payment_type_name, is_cancel, 
+    cancel_remark, user_id, store_id, charge_id, pay_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guoan.entity.shequ.bo.OrderCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order o
+    where o.order_id = #{orderId,jdbcType=VARCHAR} and o.order_status != 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guoan.entity.shequ.bo.OrderCriteria" >
+    delete from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guoan.entity.shequ.bo.Order" >
+    insert into t_order (order_id, order_sn, order_telephone, 
+      create_time, order_contact, order_address, 
+      order_remark, appointment_begin_time, appointment_end_time, 
+      order_type, service_user_id, service_telephone, 
+      service_contact, service_type, service_remark, 
+      coupon_id, order_amount, order_reduce, 
+      order_paid, order_status, flow_status, 
+      flow_status_name, is_evaluation, evaluation_attitude, 
+      evaluation_quality, evaluation_remark, payment_type, 
+      payment_type_name, is_cancel, cancel_remark, 
+      user_id, store_id)
+    values (#{orderId,jdbcType=VARCHAR}, #{orderSn,jdbcType=VARCHAR}, #{orderTelephone,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{orderContact,jdbcType=VARCHAR}, #{orderAddress,jdbcType=VARCHAR}, 
+      #{orderRemark,jdbcType=VARCHAR}, #{appointmentBeginTime,jdbcType=TIMESTAMP}, #{appointmentEndTime,jdbcType=TIMESTAMP}, 
+      #{orderType,jdbcType=INTEGER}, #{serviceUserId,jdbcType=VARCHAR}, #{serviceTelephone,jdbcType=VARCHAR}, 
+      #{serviceContact,jdbcType=VARCHAR}, #{serviceType,jdbcType=VARCHAR}, #{serviceRemark,jdbcType=VARCHAR}, 
+      #{couponId,jdbcType=VARCHAR}, #{orderAmount,jdbcType=DOUBLE}, #{orderReduce,jdbcType=DOUBLE}, 
+      #{orderPaid,jdbcType=DOUBLE}, #{orderStatus,jdbcType=INTEGER}, #{flowStatus,jdbcType=INTEGER}, 
+      #{flowStatusName,jdbcType=VARCHAR}, #{isEvaluation,jdbcType=INTEGER}, #{evaluationAttitude,jdbcType=INTEGER}, 
+      #{evaluationQuality,jdbcType=INTEGER}, #{evaluationRemark,jdbcType=VARCHAR}, #{paymentType,jdbcType=INTEGER}, 
+      #{paymentTypeName,jdbcType=VARCHAR}, #{isCancel,jdbcType=INTEGER}, #{cancelRemark,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{storeId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.guoan.entity.shequ.bo.Order" >
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderSn != null" >
+        order_sn,
+      </if>
+      <if test="orderTelephone != null" >
+        order_telephone,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="orderContact != null" >
+        order_contact,
+      </if>
+      <if test="orderAddress != null" >
+        order_address,
+      </if>
+      <if test="orderRemark != null" >
+        order_remark,
+      </if>
+      <if test="appointmentBeginTime != null" >
+        appointment_begin_time,
+      </if>
+      <if test="appointmentEndTime != null" >
+        appointment_end_time,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="serviceUserId != null" >
+        service_user_id,
+      </if>
+      <if test="serviceTelephone != null" >
+        service_telephone,
+      </if>
+      <if test="serviceContact != null" >
+        service_contact,
+      </if>
+      <if test="serviceType != null" >
+        service_type,
+      </if>
+      <if test="serviceRemark != null" >
+        service_remark,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="orderAmount != null" >
+        order_amount,
+      </if>
+      <if test="orderReduce != null" >
+        order_reduce,
+      </if>
+      <if test="orderPaid != null" >
+        order_paid,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="flowStatus != null" >
+        flow_status,
+      </if>
+      <if test="flowStatusName != null" >
+        flow_status_name,
+      </if>
+      <if test="isEvaluation != null" >
+        is_evaluation,
+      </if>
+      <if test="evaluationAttitude != null" >
+        evaluation_attitude,
+      </if>
+      <if test="evaluationQuality != null" >
+        evaluation_quality,
+      </if>
+      <if test="evaluationRemark != null" >
+        evaluation_remark,
+      </if>
+      <if test="paymentType != null" >
+        payment_type,
+      </if>
+      <if test="paymentTypeName != null" >
+        payment_type_name,
+      </if>
+      <if test="isCancel != null" >
+        is_cancel,
+      </if>
+      <if test="cancelRemark != null" >
+        cancel_remark,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="chargeId != null" >
+        charge_id,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSn != null" >
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTelephone != null" >
+        #{orderTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderContact != null" >
+        #{orderContact,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAddress != null" >
+        #{orderAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orderRemark != null" >
+        #{orderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="appointmentBeginTime != null" >
+        #{appointmentBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointmentEndTime != null" >
+        #{appointmentEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="serviceUserId != null" >
+        #{serviceUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceTelephone != null" >
+        #{serviceTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceContact != null" >
+        #{serviceContact,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRemark != null" >
+        #{serviceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderReduce != null" >
+        #{orderReduce,jdbcType=DOUBLE},
+      </if>
+      <if test="orderPaid != null" >
+        #{orderPaid,jdbcType=DOUBLE},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="flowStatus != null" >
+        #{flowStatus,jdbcType=INTEGER},
+      </if>
+      <if test="flowStatusName != null" >
+        #{flowStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="isEvaluation != null" >
+        #{isEvaluation,jdbcType=INTEGER},
+      </if>
+      <if test="evaluationAttitude != null" >
+        #{evaluationAttitude,jdbcType=INTEGER},
+      </if>
+      <if test="evaluationQuality != null" >
+        #{evaluationQuality,jdbcType=INTEGER},
+      </if>
+      <if test="evaluationRemark != null" >
+        #{evaluationRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentType != null" >
+        #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="paymentTypeName != null" >
+        #{paymentTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isCancel != null" >
+        #{isCancel,jdbcType=INTEGER},
+      </if>
+      <if test="cancelRemark != null" >
+        #{cancelRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="chargeId != null" >
+        #{chargeId,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guoan.entity.shequ.bo.OrderCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_order
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderSn != null" >
+        order_sn = #{record.orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderTelephone != null" >
+        order_telephone = #{record.orderTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderContact != null" >
+        order_contact = #{record.orderContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderAddress != null" >
+        order_address = #{record.orderAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderRemark != null" >
+        order_remark = #{record.orderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appointmentBeginTime != null" >
+        appointment_begin_time = #{record.appointmentBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.appointmentEndTime != null" >
+        appointment_end_time = #{record.appointmentEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderType != null" >
+        order_type = #{record.orderType,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceUserId != null" >
+        service_user_id = #{record.serviceUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceTelephone != null" >
+        service_telephone = #{record.serviceTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceContact != null" >
+        service_contact = #{record.serviceContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceType != null" >
+        service_type = #{record.serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceRemark != null" >
+        service_remark = #{record.serviceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponId != null" >
+        coupon_id = #{record.couponId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderAmount != null" >
+        order_amount = #{record.orderAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.orderReduce != null" >
+        order_reduce = #{record.orderReduce,jdbcType=DOUBLE},
+      </if>
+      <if test="record.orderPaid != null" >
+        order_paid = #{record.orderPaid,jdbcType=DOUBLE},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.flowStatus != null" >
+        flow_status = #{record.flowStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.flowStatusName != null" >
+        flow_status_name = #{record.flowStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isEvaluation != null" >
+        is_evaluation = #{record.isEvaluation,jdbcType=INTEGER},
+      </if>
+      <if test="record.evaluationAttitude != null" >
+        evaluation_attitude = #{record.evaluationAttitude,jdbcType=INTEGER},
+      </if>
+      <if test="record.evaluationQuality != null" >
+        evaluation_quality = #{record.evaluationQuality,jdbcType=INTEGER},
+      </if>
+      <if test="record.evaluationRemark != null" >
+        evaluation_remark = #{record.evaluationRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentType != null" >
+        payment_type = #{record.paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentTypeName != null" >
+        payment_type_name = #{record.paymentTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCancel != null" >
+        is_cancel = #{record.isCancel,jdbcType=INTEGER},
+      </if>
+      <if test="record.cancelRemark != null" >
+        cancel_remark = #{record.cancelRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.chargeId != null" >
+        charge_id = #{record.chargeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payTime != null" >
+        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_order
+    set order_id = #{record.orderId,jdbcType=VARCHAR},
+      order_sn = #{record.orderSn,jdbcType=VARCHAR},
+      order_telephone = #{record.orderTelephone,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      order_contact = #{record.orderContact,jdbcType=VARCHAR},
+      order_address = #{record.orderAddress,jdbcType=VARCHAR},
+      order_remark = #{record.orderRemark,jdbcType=VARCHAR},
+      appointment_begin_time = #{record.appointmentBeginTime,jdbcType=TIMESTAMP},
+      appointment_end_time = #{record.appointmentEndTime,jdbcType=TIMESTAMP},
+      order_type = #{record.orderType,jdbcType=INTEGER},
+      service_user_id = #{record.serviceUserId,jdbcType=VARCHAR},
+      service_telephone = #{record.serviceTelephone,jdbcType=VARCHAR},
+      service_contact = #{record.serviceContact,jdbcType=VARCHAR},
+      service_type = #{record.serviceType,jdbcType=VARCHAR},
+      service_remark = #{record.serviceRemark,jdbcType=VARCHAR},
+      coupon_id = #{record.couponId,jdbcType=VARCHAR},
+      order_amount = #{record.orderAmount,jdbcType=DOUBLE},
+      order_reduce = #{record.orderReduce,jdbcType=DOUBLE},
+      order_paid = #{record.orderPaid,jdbcType=DOUBLE},
+      order_status = #{record.orderStatus,jdbcType=INTEGER},
+      flow_status = #{record.flowStatus,jdbcType=INTEGER},
+      flow_status_name = #{record.flowStatusName,jdbcType=VARCHAR},
+      is_evaluation = #{record.isEvaluation,jdbcType=INTEGER},
+      evaluation_attitude = #{record.evaluationAttitude,jdbcType=INTEGER},
+      evaluation_quality = #{record.evaluationQuality,jdbcType=INTEGER},
+      evaluation_remark = #{record.evaluationRemark,jdbcType=VARCHAR},
+      payment_type = #{record.paymentType,jdbcType=INTEGER},
+      payment_type_name = #{record.paymentTypeName,jdbcType=VARCHAR},
+      is_cancel = #{record.isCancel,jdbcType=INTEGER},
+      cancel_remark = #{record.cancelRemark,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=BIGINT}
+      charge_id = #{record.chargeId,jdbcType=VARCHAR},
+      pay_time = #{record.payTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guoan.entity.shequ.bo.Order" >
+    update t_order
+    <set >
+      <if test="orderSn != null" >
+        order_sn = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTelephone != null" >
+        order_telephone = #{orderTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderContact != null" >
+        order_contact = #{orderContact,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAddress != null" >
+        order_address = #{orderAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orderRemark != null" >
+        order_remark = #{orderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="appointmentBeginTime != null" >
+        appointment_begin_time = #{appointmentBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointmentEndTime != null" >
+        appointment_end_time = #{appointmentEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="serviceUserId != null" >
+        service_user_id = #{serviceUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceTelephone != null" >
+        service_telephone = #{serviceTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceContact != null" >
+        service_contact = #{serviceContact,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        service_type = #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceRemark != null" >
+        service_remark = #{serviceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        order_amount = #{orderAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderReduce != null" >
+        order_reduce = #{orderReduce,jdbcType=DOUBLE},
+      </if>
+      <if test="orderPaid != null" >
+        order_paid = #{orderPaid,jdbcType=DOUBLE},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="flowStatus != null" >
+        flow_status = #{flowStatus,jdbcType=INTEGER},
+      </if>
+      <if test="flowStatusName != null" >
+        flow_status_name = #{flowStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="isEvaluation != null" >
+        is_evaluation = #{isEvaluation,jdbcType=INTEGER},
+      </if>
+      <if test="evaluationAttitude != null" >
+        evaluation_attitude = #{evaluationAttitude,jdbcType=INTEGER},
+      </if>
+      <if test="evaluationQuality != null" >
+        evaluation_quality = #{evaluationQuality,jdbcType=INTEGER},
+      </if>
+      <if test="evaluationRemark != null" >
+        evaluation_remark = #{evaluationRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentType != null" >
+        payment_type = #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="paymentTypeName != null" >
+        payment_type_name = #{paymentTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isCancel != null" >
+        is_cancel = #{isCancel,jdbcType=INTEGER},
+      </if>
+      <if test="cancelRemark != null" >
+        cancel_remark = #{cancelRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="chargeId != null" >
+        charge_id = #{chargeId,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guoan.entity.shequ.bo.Order" >
+    update t_order
+    set order_sn = #{orderSn,jdbcType=VARCHAR},
+      order_telephone = #{orderTelephone,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      order_contact = #{orderContact,jdbcType=VARCHAR},
+      order_address = #{orderAddress,jdbcType=VARCHAR},
+      order_remark = #{orderRemark,jdbcType=VARCHAR},
+      appointment_begin_time = #{appointmentBeginTime,jdbcType=TIMESTAMP},
+      appointment_end_time = #{appointmentEndTime,jdbcType=TIMESTAMP},
+      order_type = #{orderType,jdbcType=INTEGER},
+      service_user_id = #{serviceUserId,jdbcType=VARCHAR},
+      service_telephone = #{serviceTelephone,jdbcType=VARCHAR},
+      service_contact = #{serviceContact,jdbcType=VARCHAR},
+      service_type = #{serviceType,jdbcType=VARCHAR},
+      service_remark = #{serviceRemark,jdbcType=VARCHAR},
+      coupon_id = #{couponId,jdbcType=VARCHAR},
+      order_amount = #{orderAmount,jdbcType=DOUBLE},
+      order_reduce = #{orderReduce,jdbcType=DOUBLE},
+      order_paid = #{orderPaid,jdbcType=DOUBLE},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      flow_status = #{flowStatus,jdbcType=INTEGER},
+      flow_status_name = #{flowStatusName,jdbcType=VARCHAR},
+      is_evaluation = #{isEvaluation,jdbcType=INTEGER},
+      evaluation_attitude = #{evaluationAttitude,jdbcType=INTEGER},
+      evaluation_quality = #{evaluationQuality,jdbcType=INTEGER},
+      evaluation_remark = #{evaluationRemark,jdbcType=VARCHAR},
+      payment_type = #{paymentType,jdbcType=INTEGER},
+      payment_type_name = #{paymentTypeName,jdbcType=VARCHAR},
+      is_cancel = #{isCancel,jdbcType=INTEGER},
+      cancel_remark = #{cancelRemark,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=BIGINT}
+      charge_id = #{chargeId,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 开始 -->
+  <resultMap id="BaseWorkOrderVOResultMap" type="com.guoan.entity.work.vo.WorkOrderVO" >
+    <result column="serviceType" property="serviceType" jdbcType="VARCHAR" />
+    <result column="serviceTypeCount" property="serviceTypeCount" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseWorkOrderFlowVOResultMap" type="com.guoan.entity.work.vo.WorkOrderFlowVO" >
+    <result column="flowStatus" property="flowStatus" jdbcType="VARCHAR" />
+    <result column="flowStatusCount" property="flowStatusCount" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <update id="cancelOrder"  parameterType="map" >
+  	update t_order
+  	set is_cancel = 1, cancel_remark = #{record.remark,jdbcType=VARCHAR},
+  	 flow_status = #{record.status,jdbcType=INTEGER}, flow_status_name = #{record.statusName,jdbcType=VARCHAR}
+  	where order_id = #{record.id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="deleteOrder"  parameterType="java.lang.String">
+  	update t_order
+  	set order_status = 0
+  	where order_id = #{id}
+  </update>
+
+  <update id="commentOrder"  parameterType="com.guoan.entity.shequ.param.OrderParam" >
+  	update t_order
+  	set is_evaluation = 1, evaluation_attitude = #{record.evaluationAttitude,jdbcType=INTEGER},
+  	evaluation_quality=#{record.evaluationQuality,jdbcType=INTEGER}, evaluation_remark=#{record.evaluationRemark,jdbcType=VARCHAR}
+  	where order_id = #{record.orderId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateOrderStatus"  parameterType="map" >
+  	update t_order
+  	set flow_status = #{record.status,jdbcType=INTEGER}, flow_status_name = #{record.orderStatusStr,jdbcType=VARCHAR}
+  	where order_id = #{record.id,jdbcType=VARCHAR}
+  </update>
+
+
+  <!-- 新增开始 -->
+  <select id="seachWorkOrderVOInfo" resultMap="BaseWorkOrderVOResultMap" parameterType="map" >
+    SELECT service_type serviceType, count(*) serviceTypeCount from t_order o
+    where 1=1 and o.order_status != 0
+    <if test="record.serviceTypeList != null">
+      AND o.service_type in
+      <foreach collection="record.serviceTypeList" close=")" index="index" item="item" open="(" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="record.flowStatus != null">
+      and o.flow_status  = #{record.flowStatus,jdbcType=INTEGER}
+    </if>
+    <if test="record.serviceTelephone != null">
+      and o.service_telephone  = #{record.serviceTelephone,jdbcType=INTEGER}
+    </if>
+    <if test="record.flowStatus != 40">
+      and o.flow_status != 40
+    </if>
+    and o.flow_status != -1 and o.flow_status != 900 and o.flow_status != 901
+    GROUP BY o.service_type
+  </select>
+
+  <update id="updateAmountById" >
+  	update t_order
+  	set order_amount = #{amount,jdbcType=DOUBLE}
+  	where order_id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="seachWorkOrderTypeVOInfo" resultMap="BaseWorkOrderFlowVOResultMap" parameterType="map" >
+    SELECT flow_status flowStatus, count(*) flowStatusCount from t_order o
+    where 1=1 and o.order_status != 0
+    <if test="record.serviceType != null">
+      AND o.service_type = #{record.serviceType,jdbcType=VARCHAR}
+    </if>
+    <if test="record.serviceTelephone != null">
+      and o.service_telephone  = #{record.serviceTelephone,jdbcType=INTEGER}
+    </if>
+    and o.flow_status != -1 and o.flow_status != 40 and o.flow_status != 900 and o.flow_status != 901
+    GROUP BY o.flow_status
+  </select>
+  <select id="getOrderList" parameterType="map"  resultMap="BaseResultMap" >
+  	select * from t_order
+      <include refid="Select_Order_List_Where_Clause" />
+
+    <if test="record.orderByClause != null" >
+      order by ${record.orderByClause}
+    </if>
+    <if test="record.limitStart != null and record.limitStart>=0" >
+      limit #{record.limitStart} , #{record.limitEnd}
+    </if>
+  </select>
+
+  <select id="getOrderListCount" resultType="java.lang.Integer"  parameterType="map" >
+  	select count(*) from t_order
+      <include refid="Select_Order_List_Where_Clause" />
+  </select>
+
+  <sql id="Select_Order_List_Where_Clause" >
+  	<where>
+  		and order_status = #{record.orderStatus,jdbcType=INTEGER}
+  		<if test="record.userId != null" >
+  			and user_id = #{record.userId,jdbcType=VARCHAR}
+  		</if>
+  		<if test="record.flowStatusList != null" >
+  		 	and flow_status in
+      		<foreach collection="record.flowStatusList" item="status" open="(" close=")" separator="," >
+                    #{status}
+      		</foreach>
+  		</if>
+  	</where>
+  </sql>
+
+</mapper>

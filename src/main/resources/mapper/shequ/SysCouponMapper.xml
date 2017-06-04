@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoan.dao.shequ.SysCouponMapper" >
+  <resultMap id="BaseResultMap" type="com.guoan.entity.shequ.bo.SysCoupon" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="batch_id" property="batchId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="amount" property="amount" jdbcType="DOUBLE" />
+    <result column="service_type" property="serviceType" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="expiration_date" property="expirationDate" jdbcType="DATE" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, sn, name, batch_id, create_time, amount, service_type, status, user_id, expiration_date, 
+    description
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guoan.entity.shequ.bo.SysCouponCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_sys_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_coupon
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_sys_coupon
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guoan.entity.shequ.bo.SysCouponCriteria" >
+    delete from t_sys_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guoan.entity.shequ.bo.SysCoupon" >
+    insert into t_sys_coupon (id, sn, name, 
+      batch_id, create_time, amount, 
+      service_type, status, user_id, 
+      expiration_date, description)
+    values (#{id,jdbcType=VARCHAR}, #{sn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{batchId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{amount,jdbcType=DOUBLE}, 
+      #{serviceType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{expirationDate,jdbcType=DATE}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.guoan.entity.shequ.bo.SysCoupon" >
+    insert into t_sys_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sn != null" >
+        sn,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="batchId != null" >
+        batch_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="serviceType != null" >
+        service_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null" >
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="batchId != null" >
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="serviceType != null" >
+        #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guoan.entity.shequ.bo.SysCouponCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_sys_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_sys_coupon
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sn != null" >
+        sn = #{record.sn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchId != null" >
+        batch_id = #{record.batchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.serviceType != null" >
+        service_type = #{record.serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expirationDate != null" >
+        expiration_date = #{record.expirationDate,jdbcType=DATE},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_sys_coupon
+    set id = #{record.id,jdbcType=VARCHAR},
+      sn = #{record.sn,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      batch_id = #{record.batchId,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      amount = #{record.amount,jdbcType=DOUBLE},
+      service_type = #{record.serviceType,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      expiration_date = #{record.expirationDate,jdbcType=DATE},
+      description = #{record.description,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guoan.entity.shequ.bo.SysCoupon" >
+    update t_sys_coupon
+    <set >
+      <if test="sn != null" >
+        sn = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="batchId != null" >
+        batch_id = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="serviceType != null" >
+        service_type = #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationDate != null" >
+        expiration_date = #{expirationDate,jdbcType=DATE},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guoan.entity.shequ.bo.SysCoupon" >
+    update t_sys_coupon
+    set sn = #{sn,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      batch_id = #{batchId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=DOUBLE},
+      service_type = #{serviceType,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      expiration_date = #{expirationDate,jdbcType=DATE},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 开始 -->
+  <update id="updateBindUserId" parameterType="java.lang.String" >
+  	UPDATE t_sys_coupon c,
+	 (
+		SELECT
+			c.*
+		FROM
+			t_sys_coupon c,
+			t_sys_coupon_batch b
+		WHERE
+			b.condition_type = 'register'
+		AND b.id = c.batch_id
+		AND c.status != 'ineffective'
+		AND (
+			c.user_id IS NULL
+			OR c.user_id = ''
+		)
+		ORDER BY
+			rand()
+		LIMIT 1
+	) b
+	SET c.user_id = #{userId,jdbcType=VARCHAR},
+	 c.`status` = 'bind'
+	WHERE
+		b.id = c.id
+  </update>
+  
+</mapper>

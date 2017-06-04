@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoan.dao.shequ.SysStoreMapper" >
+  
+  <select id="getStoreByArea" resultType="java.util.HashMap" >
+	  SELECT
+	  	*
+	  FROM
+	  	t_sys_store t
+	  WHERE
+	    t.area_id in
+		  <foreach collection="areaList" item="area" open="(" close=")" separator="," >
+			  #{area}
+		  </foreach>
+	  	and t.status = 0
+	  order by area_id desc
+  </select>
+
+  <select id="getStoreAreaByStoreId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+	select area_id from t_sys_store s where s.id = #{storeId} and s.status = 0
+  </select>
+  
+</mapper>

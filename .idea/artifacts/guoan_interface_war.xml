@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="guoan_interface:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="guoan_interface_15.war">
+      <element id="artifact" artifact-name="guoan_interface:war exploded" />
+    </root>
+  </artifact>
+</component>

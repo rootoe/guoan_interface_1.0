@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+	  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+	  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<!-- mvn org.mybatis.generator:mybatis-generator-maven-plugin:1.3.1:generate -->
+
+	<classPathEntry
+		location="F:\mysql-connector-java\mysql-connector-java-5.1.7-bin.jar" />
+
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+
+		<property name="suppressTypeWarnings" value="true" />
+
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+		<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+			<property name="searchString" value="Example$" />
+			<property name="replaceString" value="Criteria" />
+		</plugin>
+
+		<plugin type="com.guoan.utils.plugin.MysqlPagePlugin" />
+
+		<!-- <plugin type="com.guoan.utils.plugin.Struts2ActionPlugin" /> -->
+
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+         <!--
+          
+           <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://testgatz.mysql.rds.aliyuncs.com:3306/guoanshequ15?generateSimpleParameterMetadata=true"
+			userId="xinzhixu" password="zhixu2014">
+		</jdbcConnection>
+		
+          -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/guoanshequtest?generateSimpleParameterMetadata=true"
+			userId="root" password="root">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- generate Model 实体类 -->
+		<javaModelGenerator targetPackage="com.guoan.entity.shequ.bo" targetProject="c:\mybatis-generated">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- generate xml -->
+		<sqlMapGenerator targetPackage="xml" targetProject="c:\mybatis-generated">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- generate Mapper -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.guoan.dao.shequ" targetProject="c:\mybatis-generated">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+
+		<!-- 生成表 -->
+		<!--<table schema="" tableName="t_order_clean" domainObjectName="OrderClean"></table>-->
+		<!--<table schema="" tableName="t_order_clean_info" domainObjectName="OrderCleanInfo"></table>-->
+		<!--<table schema="" tableName="t_order_maintain" domainObjectName="OrderMaintain"></table>-->
+		<!--<table schema="" tableName="t_order_maintain_info" domainObjectName="OrderMaintainInfo"></table>-->
+		<table schema="" tableName="t_order_drugs" domainObjectName="OrderDrug"></table>
+		<!--<table schema="" tableName="t_order_pay_info" domainObjectName="OrderPayInfo"></table>-->
+	<!--<table schema="" tableName="t_message" domainObjectName="Message"></table>-->
+	<!--<table schema="" tableName="t_order_shop_goods" domainObjectName="OrderGoods"></table>-->
+	<!--<table schema="" tableName="t_order_shop_info" domainObjectName="OrderGoodsInfo"></table>-->
+	<!--<table schema="" tableName="t_chat_message" domainObjectName="ChatMessage"></table>-->
+	<!--<table schema="" tableName="t_sys_user" domainObjectName="shequUserInfo"></table>-->
+<!-- 		<table schema="" tableName="t_app_device_info" domainObjectName="AppDeviceInfo"></table> -->
+<!-- 		<table schema="" tableName="t_app_software_info" domainObjectName="AppSoftwareInfo"></table> -->
+<!-- 		<table schema="" tableName="t_app_user_address" domainObjectName="AppUserAddress"></table> -->
+	</context>
+</generatorConfiguration>

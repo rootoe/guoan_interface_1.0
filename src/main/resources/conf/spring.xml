@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!-- 扫描文件（自动将servicec层注入） -->
+	<context:component-scan base-package="com.guoan.service.*, com.guoan.dao.*" />
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="1" />
+	    <property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="locations">
+			<list>
+				<!-- 引入jdbc配置文件 -->
+ 				<value>classpath:conf/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="com.guoan.utils.spring.SpringContextHolder" lazy-init="false" />
+	
+	<!-- 做个切面 赵彤 --> 
+	<bean id="methodTimeAdvice" class="com.guoan.utils.aop.MethodTimeAdvice"/>
+	<!-- 切它 -->	
+	<aop:config>
+		<aop:advisor id="methodTimeLog" advice-ref="methodTimeAdvice" pointcut="execution(* com.guoan.service..*.*(..))" />
+	</aop:config>
+	
+	
+	<!-- 
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	 -->
+	<!-- ajax responseBody 乱码 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<bean class="org.springframework.http.MediaType">
+								<constructor-arg index="0" value="text" />
+								<constructor-arg index="1" value="plain" />
+								<constructor-arg index="2" value="UTF-8" />
+							</bean>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 订单SN重置定时器 开始 -->
+
+<!-- 	<bean id="sequence" class="com.guoan.utils.generate.GenerateOrderSnUtils" /> -->
+
+<!-- 	<bean id="job" class="com.guoan.utils.generate.OrderSnSequenceResetJob" /> -->
+
+<!-- 	<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> -->
+<!-- 		<property name="targetObject" ref="job" /> -->
+<!-- 		<property name="targetMethod" value="execute" /> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> -->
+<!-- 		<property name="jobDetail" ref="jobDetail" /> -->
+<!-- 		<property name="cronExpression" value="0 0 0 * * ?" /> -->
+<!-- 		<property name="cronExpression" value="0 0/1 * * * ?" /> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> -->
+<!-- 		<property name="triggers"> -->
+<!-- 			<list> -->
+<!-- 				<ref bean="cronTrigger" /> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+	<!-- 订单SN重置定时器 结束 -->
+</beans>

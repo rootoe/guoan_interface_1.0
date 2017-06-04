@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoan.dao.shequ.SysPricePackageMapper" >
+
+  <resultMap id="BaseResultMap" type="com.guoan.entity.shequ.bo.TreePricePackage" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="provider_id" property="providerId" jdbcType="VARCHAR" />
+    <result column="provider_name" property="providerName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="getPricePackageListByParent" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select p.*,s.name as provider_name from t_sys_price_package p, t_sys_service_provider s where parent_id = #{parentId} and p.provider_id = s.id
+  </select>
+  
+  <select id="getTopPricePackageListByTypeAndArear" resultMap="BaseResultMap" parameterType="map" >
+  	SELECT
+		p.*, s. NAME AS provider_name
+	FROM
+		t_sys_price_package p,
+		t_sys_service_provider s,
+		t_sys_provider_area a
+	WHERE
+		parent_id IS NULL
+	AND p.provider_id = s.id
+	AND s.type = #{record.type,jdbcType=VARCHAR}
+	AND s. STATUS = 1
+	AND s.id = a.provider_id
+	AND a.area_id in
+   		<foreach collection="record.areaList" item="area" open="(" close=")" separator="," >
+        	#{area}
+   		</foreach>
+  </select>
+
+</mapper>

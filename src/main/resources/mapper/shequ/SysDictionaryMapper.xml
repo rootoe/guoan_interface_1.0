@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoan.dao.shequ.SysDictionaryMapper" >
+  
+  <select id="getDictionaryByType" resultType="java.util.HashMap" parameterType="java.lang.String" >
+  	select id,name from t_sys_dictionary where dictionarytype_code = #{code}
+  </select>
+
+  <select id="getDictionaryById" resultType="java.util.HashMap" parameterType="java.lang.Integer" >
+    select id,name,code from t_sys_dictionary where id = #{id}
+  </select>
+  
+</mapper>
